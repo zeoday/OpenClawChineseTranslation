@@ -1,11 +1,7 @@
 {
   "file": "src/commands/doctor.ts",
   "description": "诊断命令",
-  "translations": [
-    {
-      "original": "OpenClaw doctor",
-      "translated": "OpenClaw 诊断",
-      "context": "命令标题"
-    }
-  ]
+  "replacements": {
+    "intro(\"OpenClaw doctor\")": "intro(\"OpenClaw 诊断\")"
+  }
 }
