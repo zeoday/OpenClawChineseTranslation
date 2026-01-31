@@ -693,6 +693,49 @@ openclaw --version  # 应提示命令不存在
 
 启动 OpenClaw 后，访问 `http://localhost:18789` 即可打开网页控制台（全中文界面）。
 
+### Q: Docker 拉取镜像提示 denied？
+
+清理 Docker 登录缓存后重试：
+
+```bash
+docker logout ghcr.io
+docker pull ghcr.io/1186258278/openclaw-zh:nightly
+```
+
+### Q: Docker 容器一直重启？
+
+通常是没有初始化配置。先查看日志：
+
+```bash
+docker logs openclaw
+```
+
+如果提示 `Missing config` 或 `gateway.mode`，按以下步骤重新配置：
+
+```bash
+# 停止并删除容器
+docker stop openclaw && docker rm openclaw
+
+# 初始化配置
+docker run --rm -v openclaw-data:/root/.openclaw ghcr.io/1186258278/openclaw-zh:nightly openclaw setup
+docker run --rm -v openclaw-data:/root/.openclaw ghcr.io/1186258278/openclaw-zh:nightly openclaw config set gateway.mode local
+
+# 重新启动
+docker run -d --name openclaw -p 18789:18789 -v openclaw-data:/root/.openclaw --restart unless-stopped ghcr.io/1186258278/openclaw-zh:nightly openclaw gateway run
+```
+
+### Q: 远程访问 Dashboard 连不上？
+
+通过 HTTP 远程访问时，需要设置 Token 认证：
+
+```bash
+# 在服务器上设置 token
+docker exec openclaw openclaw config set gateway.auth.token YOUR_TOKEN
+docker restart openclaw
+```
+
+然后打开 `http://服务器IP:18789`，在「网关令牌」输入框填入 token，点击「连接」即可。
+
 ---
 
 ## 🔗 相关链接
