@@ -772,6 +772,40 @@ docker restart openclaw
 
 然后打开 `http://服务器IP:18789`，在「网关令牌」输入框填入 token，点击「连接」即可。
 
+### Q: npm 安装后内网其他电脑无法访问？
+
+**问题**：在服务器上用 npm 安装 OpenClaw，内网其他电脑访问 `http://服务器IP:18789` 失败。
+
+**原因**：默认情况下 Gateway 只监听 `127.0.0.1`（本机），需要配置为监听所有网络接口。
+
+**解决步骤：**
+
+```bash
+# 1. 配置 Gateway 绑定到局域网
+openclaw config set gateway.bind lan
+
+# 2. 设置访问令牌（必须，否则内网访问会被拒绝）
+openclaw config set gateway.auth.token '你的密码'
+
+# 3. 安装后台守护进程（可选，让 OpenClaw 开机自启）
+openclaw onboard --install-daemon
+
+# 4. 重启 Gateway 生效
+openclaw gateway restart
+```
+
+**访问方式**：`http://服务器IP:18789`，在「网关令牌」输入你设置的密码。
+
+> 💡 **提示**：如果还是无法访问，检查服务器防火墙是否放行 18789 端口：
+> ```bash
+> # Ubuntu/Debian
+> sudo ufw allow 18789
+> 
+> # CentOS/RHEL
+> sudo firewall-cmd --add-port=18789/tcp --permanent
+> sudo firewall-cmd --reload
+> ```
+
 ---
 
 ## 🔗 相关链接
