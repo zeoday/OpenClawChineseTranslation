@@ -1,0 +1,79 @@
+{
+  "faq": [
+    {
+      "id": "token-mismatch",
+      "question": "Dashboard 显示 gateway token mismatch 怎么办？",
+      "answer": "这是 Token 认证失败。请使用命令 `openclaw dashboard` 自动打开带 token 的 URL。\n\nDocker 环境下：\n```\ndocker exec openclaw openclaw dashboard --print-url\n```\n复制输出的 URL 到浏览器打开。"
+    },
+    {
+      "id": "pairing-required",
+      "question": "Dashboard 连接显示 pairing required 怎么办？",
+      "answer": "这是设备配对安全机制。解决步骤：\n\n1. 查看待配对设备：\n```\ndocker exec openclaw openclaw devices list --password '你的密码'\n```\n\n2. 批准配对请求：\n```\ndocker exec openclaw openclaw devices approve <Request-ID>\n```\n\n3. 在 Dashboard 点击「连接」按钮"
+    },
+    {
+      "id": "remote-access",
+      "question": "远程访问 Dashboard 连不上？",
+      "answer": "通过 HTTP 远程访问需要设置 Token 认证：\n\n```\ndocker exec openclaw openclaw config set gateway.auth.token YOUR_TOKEN\ndocker restart openclaw\n```\n\n然后打开 `http://服务器IP:18789`，在「网关令牌」输入框填入 token。"
+    },
+    {
+      "id": "docker-restart",
+      "question": "Docker 容器一直重启？",
+      "answer": "通常是没有初始化配置。先查看日志：\n```\ndocker logs openclaw\n```\n\n如果提示 `Missing config`，按以下步骤重新配置：\n```\ndocker stop openclaw && docker rm openclaw\ndocker run --rm -v openclaw-data:/root/.openclaw IMAGE openclaw setup\ndocker run --rm -v openclaw-data:/root/.openclaw IMAGE openclaw config set gateway.mode local\n```"
+    },
+    {
+      "id": "lan-access",
+      "question": "npm 安装后内网其他电脑无法访问？",
+      "answer": "默认情况下 Gateway 只监听本机，需要配置监听所有网络接口：\n\n```\nopenclaw config set gateway.bind lan\nopenclaw config set gateway.auth.token '你的密码'\nopenclaw gateway restart\n```\n\n如果还是无法访问，检查防火墙是否放行 18789 端口。"
+    },
+    {
+      "id": "icon-missing",
+      "question": "图标不显示？",
+      "answer": "更新到最新版即可：\n```\nnpm update -g @qingchencloud/openclaw-zh\n```"
+    },
+    {
+      "id": "still-english",
+      "question": "安装后运行还是英文？",
+      "answer": "先卸载原版，再安装汉化版：\n```\nnpm uninstall -g openclaw\nnpm install -g @qingchencloud/openclaw-zh@latest\n```"
+    },
+    {
+      "id": "how-to-update",
+      "question": "如何更新到最新版？",
+      "answer": "```\nnpm update -g @qingchencloud/openclaw-zh\n```\n\nDocker 环境：\n```\ndocker pull ghcr.io/1186258278/openclaw-zh:latest\ndocker stop openclaw && docker rm openclaw\n# 重新启动容器\n```"
+    }
+  ],
+  "plugins": [
+    {
+      "id": "zhipu-provider",
+      "name": "智谱 GLM 模型提供商",
+      "description": "为 OpenClaw 添加智谱 GLM-4 系列模型支持，包括 GLM-4-Plus、GLM-4-Flash（免费）等",
+      "version": "1.0.0",
+      "status": "available",
+      "install": "npm install @qingchencloud/openclaw-zhipu"
+    },
+    {
+      "id": "deepseek-provider",
+      "name": "DeepSeek 模型提供商",
+      "description": "为 OpenClaw 添加 DeepSeek-V3 模型支持",
+      "version": "待开发",
+      "status": "coming-soon",
+      "install": ""
+    },
+    {
+      "id": "qwen-provider",
+      "name": "通义千问模型提供商",
+      "description": "为 OpenClaw 添加阿里通义千问 Qwen 系列模型支持",
+      "version": "待开发",
+      "status": "coming-soon",
+      "install": ""
+    }
+  ],
+  "about": {
+    "project": "OpenClaw 汉化发行版",
+    "company": "武汉晴辰天下网络科技有限公司",
+    "website": "https://openclaw.qt.cool/",
+    "github": "https://github.com/1186258278/OpenClawChineseTranslation",
+    "npm": "https://www.npmjs.com/package/@qingchencloud/openclaw-zh",
+    "companyWebsite": "https://qingchencloud.com/",
+    "license": "MIT License"
+  }
+}

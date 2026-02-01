@@ -154,6 +154,11 @@ jobs:
           python3 /tmp/fix_icon.py
           echo "✅ 图标修复完成"
 
+      - name: 注入功能面板
+        run: |
+          python3 scripts/inject_panel.py
+          echo "✅ 功能面板注入完成"
+
       - name: 准备发布
         run: |
           RELEASE_VERSION="${{ steps.version.outputs.release_version }}"
