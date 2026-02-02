@@ -140,7 +140,15 @@ jobs:
         run: |
           pnpm install
           pnpm run build
-          echo "✅ 构建完成"
+          echo "✅ 核心构建完成"
+          
+      - name: 构建 Dashboard UI
+        working-directory: openclaw
+        run: |
+          pnpm ui:build
+          echo "✅ Dashboard UI 构建完成"
+          ls -la dist/control-ui/ || echo "❌ control-ui 目录不存在"
+          ls -la dist/control-ui/assets/ || echo "❌ assets 目录不存在"
 
       - name: 注入功能面板
         run: |
