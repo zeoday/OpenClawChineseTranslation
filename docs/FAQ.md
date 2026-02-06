@@ -8,12 +8,46 @@
 
 ## 目录
 
+- [零、紧急修复](#零紧急修复) ⚠️
 - [一、安装问题](#一安装问题)
 - [二、启动问题](#二启动问题)
 - [三、Dashboard 连不上](#三dashboard-连不上)
 - [四、内网 / 远程访问](#四内网--远程访问)
 - [五、模型和对话](#五模型和对话)
 - [六、其他问题](#六其他问题)
+
+---
+
+## 零、紧急修复
+
+### Missing workspace template: AGENTS.md
+
+**你会看到**：
+```
+Error: Missing workspace template: AGENTS.md (C:\Users\xxx\docs\reference\templates\AGENTS.md). 
+Ensure docs/reference/templates are packaged.
+```
+
+**影响版本**：`2026.2.4-zh.1` 及更早版本
+
+**原因**：汉化版在构建时修改了包名为 `@qingchencloud/openclaw-zh`，但上游代码中有一处硬编码只识别 `openclaw` 包名，导致运行时无法定位模板文件、Dashboard 资源、技能目录等关键路径。
+
+**解决方案**：
+
+```bash
+# 升级到最新版（已修复）
+npm install -g @qingchencloud/openclaw-zh@latest
+
+# 如果使用 nightly 版
+npm install -g @qingchencloud/openclaw-zh@nightly
+```
+
+此 Bug 已在 `2026.2.4-zh.2` 版本修复。如果升级后仍有问题，请尝试完全重装：
+
+```bash
+npm uninstall -g @qingchencloud/openclaw-zh
+npm install -g @qingchencloud/openclaw-zh@latest
+```
 
 ---
 
