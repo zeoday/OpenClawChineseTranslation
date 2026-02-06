@@ -37,7 +37,8 @@
       "commands/onboard-skills.json",
       "commands/plugin-install.json",
       "commands/channels.json",
-      "commands/uninstall.json"
+      "commands/uninstall.json",
+      "commands/package-root-fix.json"
     ],
     "daemon": [
       "daemon/systemd-hints.json"
