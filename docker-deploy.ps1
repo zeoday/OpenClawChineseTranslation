@@ -19,6 +19,7 @@ param(
     [string]$Name = "openclaw",
     [switch]$LocalOnly,
     [switch]$SkipInit,
+    [switch]$China,
     [switch]$Help
 )
 
@@ -26,7 +27,12 @@ $ErrorActionPreference = "Stop"
 
 # 默认配置
 $VolumeName = "openclaw-data"
-$Image = "ghcr.io/1186258278/openclaw-zh:nightly"
+if ($China) {
+    $Image = "1186258278/openclaw-zh:nightly"
+    Write-Host "✓ 使用 Docker Hub 国内加速源: $Image" -ForegroundColor Green
+} else {
+    $Image = "ghcr.io/1186258278/openclaw-zh:nightly"
+}
 
 # 帮助信息
 if ($Help) {
@@ -42,6 +48,7 @@ if ($Help) {
     Write-Host "  -Name <name>     设置容器名（默认: openclaw）"
     Write-Host "  -LocalOnly       仅本地访问（不配置远程访问）"
     Write-Host "  -SkipInit        跳过初始化（容器已存在时）"
+    Write-Host "  -China           使用 Docker Hub 国内加速源"
     Write-Host "  -Help            显示帮助信息"
     Write-Host ""
     Write-Host "示例:"

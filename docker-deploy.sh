@@ -30,9 +30,11 @@ CONTAINER_NAME="openclaw"
 VOLUME_NAME="openclaw-data"
 PORT="18789"
 IMAGE="ghcr.io/1186258278/openclaw-zh:nightly"
+IMAGE_CN="1186258278/openclaw-zh:nightly"
 GATEWAY_TOKEN=""
 LOCAL_ONLY=false
 SKIP_INIT=false
+USE_CHINA=false
 
 # 解析参数
 while [[ $# -gt 0 ]]; do
@@ -57,6 +59,10 @@ while [[ $# -gt 0 ]]; do
             SKIP_INIT=true
             shift
             ;;
+        --china|--cn)
+            USE_CHINA=true
+            shift
+            ;;
         --help|-h)
             echo "OpenClaw Docker 一键部署脚本"
             echo ""
@@ -70,6 +76,7 @@ while [[ $# -gt 0 ]]; do
             echo "  --name <name>     设置容器名（默认: openclaw）"
             echo "  --local-only      仅本地访问（不配置远程访问）"
             echo "  --skip-init       跳过初始化（容器已存在时）"
+            echo "  --china, --cn     使用 Docker Hub 国内加速源"
             echo "  --help            显示帮助信息"
             echo ""
             echo "示例:"
@@ -345,6 +352,12 @@ main() {
     echo ""
     
     check_docker
+    
+    # 国内加速源
+    if [ "$USE_CHINA" = true ]; then
+        IMAGE="$IMAGE_CN"
+        echo -e "${GREEN}✓${NC} 使用 Docker Hub 国内加速源: $IMAGE"
+    fi
     
     # 如果没有指定 Token，生成一个
     if [ -z "$GATEWAY_TOKEN" ] && [ "$LOCAL_ONLY" = false ]; then

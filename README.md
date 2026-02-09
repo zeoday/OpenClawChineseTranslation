@@ -154,20 +154,34 @@ Invoke-WebRequest -Uri "https://cdn.jsdelivr.net/gh/1186258278/OpenClawChineseTr
 
 **快速启动：**
 ```bash
+# 镜像地址（国内用户推荐 Docker Hub 加速）
+# 海外: ghcr.io/1186258278/openclaw-zh:latest
+# 国内: 1186258278/openclaw-zh:latest
+IMAGE=ghcr.io/1186258278/openclaw-zh:latest
+
 # 初始化配置
 docker run --rm -v openclaw-data:/root/.openclaw \
-  ghcr.io/1186258278/openclaw-zh:latest openclaw setup
+  $IMAGE openclaw setup
 
 docker run --rm -v openclaw-data:/root/.openclaw \
-  ghcr.io/1186258278/openclaw-zh:latest openclaw config set gateway.mode local
+  $IMAGE openclaw config set gateway.mode local
 
 # 启动容器
 docker run -d --name openclaw -p 18789:18789 \
   -v openclaw-data:/root/.openclaw \
-  ghcr.io/1186258278/openclaw-zh:latest openclaw gateway run
+  $IMAGE openclaw gateway run
 ```
 
 访问：`http://localhost:18789`
+
+**一键部署脚本（推荐）：**
+```bash
+# Linux/macOS（国内用户加 --china 参数加速）
+curl -fsSL https://cdn.jsdelivr.net/gh/1186258278/OpenClawChineseTranslation@main/docker-deploy.sh | bash -s -- --china
+
+# Windows PowerShell
+irm https://cdn.jsdelivr.net/gh/1186258278/OpenClawChineseTranslation@main/docker-deploy.ps1 | iex
+```
 
 > 完整 Docker 指南（远程部署、Nginx 反代、Docker Compose 等）请查看 **[Docker 部署指南](docs/DOCKER_GUIDE.md)**
 
@@ -211,7 +225,7 @@ npm install -g @qingchencloud/openclaw-zh@latest
 
 ```bash
 # Docker Hub 镜像（国内速度更快）
-docker pull qingchencloud/openclaw-zh:latest
+docker pull 1186258278/openclaw-zh:latest
 
 # GitHub Container Registry（默认）
 docker pull ghcr.io/1186258278/openclaw-zh:latest

@@ -257,4 +257,4 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Docker (ghcr.io)**: \`docker pull ghcr.io/${{ github.repository_owner }}/openclaw-zh:latest\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Docker Hub (国内加速)**: \`docker pull ${{ secrets.DOCKERHUB_USER }}/openclaw-zh:latest\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Docker Hub (国内加速)**: \`docker pull ${{ github.repository_owner }}/openclaw-zh:latest\`" >> $GITHUB_STEP_SUMMARY

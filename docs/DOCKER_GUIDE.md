@@ -35,24 +35,40 @@ irm https://cdn.jsdelivr.net/gh/1186258278/OpenClawChineseTranslation@main/docke
 
 ---
 
+## 镜像地址
+
+| 镜像源 | 地址 | 适用场景 |
+|--------|------|----------|
+| **Docker Hub** | `1186258278/openclaw-zh` | **国内用户推荐**，速度快 |
+| **ghcr.io** | `ghcr.io/1186258278/openclaw-zh` | 海外用户 / 默认 |
+
+> 以下命令默认使用 ghcr.io 地址。**国内用户**将 `ghcr.io/1186258278/openclaw-zh` 替换为 `1186258278/openclaw-zh` 即可加速。
+
+---
+
 ## 本地快速启动
 
 适用于在本机运行并通过 `localhost` 访问：
 
 ```bash
+# 镜像地址（国内用户推荐使用 Docker Hub 加速）
+# 海外: ghcr.io/1186258278/openclaw-zh:latest
+# 国内: 1186258278/openclaw-zh:latest
+IMAGE=ghcr.io/1186258278/openclaw-zh:latest
+
 # 1. 初始化配置（首次运行）
 docker run --rm -v openclaw-data:/root/.openclaw \
-  ghcr.io/1186258278/openclaw-zh:latest openclaw setup
+  $IMAGE openclaw setup
 
 docker run --rm -v openclaw-data:/root/.openclaw \
-  ghcr.io/1186258278/openclaw-zh:latest openclaw config set gateway.mode local
+  $IMAGE openclaw config set gateway.mode local
 
 # 2. 启动容器
 docker run -d \
   --name openclaw \
   -p 18789:18789 \
   -v openclaw-data:/root/.openclaw \
-  ghcr.io/1186258278/openclaw-zh:latest \
+  $IMAGE \
   openclaw gateway run
 ```
 
@@ -65,23 +81,28 @@ docker run -d \
 部署到服务器并从其他设备访问时，需要额外配置：
 
 ```bash
+# 镜像地址（国内服务器推荐 Docker Hub）
+# 海外: ghcr.io/1186258278/openclaw-zh:latest
+# 国内: 1186258278/openclaw-zh:latest
+IMAGE=ghcr.io/1186258278/openclaw-zh:latest
+
 # 1. 创建数据卷
 docker volume create openclaw-data
 
 # 2. 初始化配置
 docker run --rm -v openclaw-data:/root/.openclaw \
-  ghcr.io/1186258278/openclaw-zh:latest openclaw setup
+  $IMAGE openclaw setup
 
 # 3. 配置远程访问参数
 docker run --rm -v openclaw-data:/root/.openclaw \
-  ghcr.io/1186258278/openclaw-zh:latest openclaw config set gateway.mode local
+  $IMAGE openclaw config set gateway.mode local
 
 docker run --rm -v openclaw-data:/root/.openclaw \
-  ghcr.io/1186258278/openclaw-zh:latest openclaw config set gateway.bind lan
+  $IMAGE openclaw config set gateway.bind lan
 
 # 4. 设置访问令牌（推荐）
 docker run --rm -v openclaw-data:/root/.openclaw \
-  ghcr.io/1186258278/openclaw-zh:latest openclaw config set gateway.auth.token your-secure-token
+  $IMAGE openclaw config set gateway.auth.token your-secure-token
 
 # 5. 启动容器
 docker run -d \
@@ -89,7 +110,7 @@ docker run -d \
   -p 18789:18789 \
   -v openclaw-data:/root/.openclaw \
   --restart unless-stopped \
-  ghcr.io/1186258278/openclaw-zh:latest \
+  $IMAGE \
   openclaw gateway run
 ```
 
@@ -218,6 +239,7 @@ docker-compose up -d
 version: '3.8'
 services:
   openclaw:
+    # 国内用户可替换为: 1186258278/openclaw-zh:latest
     image: ghcr.io/1186258278/openclaw-zh:latest
     container_name: openclaw
     ports:
@@ -329,8 +351,13 @@ docker system prune -a --volumes
 ## 更新 Docker 镜像
 
 ```bash
+# 镜像地址（国内用户推荐 Docker Hub）
+# 海外: ghcr.io/1186258278/openclaw-zh:latest
+# 国内: 1186258278/openclaw-zh:latest
+IMAGE=ghcr.io/1186258278/openclaw-zh:latest
+
 # 1. 拉取最新镜像
-docker pull ghcr.io/1186258278/openclaw-zh:latest
+docker pull $IMAGE
 
 # 2. 停止并删除旧容器
 docker stop openclaw && docker rm openclaw
@@ -339,7 +366,7 @@ docker stop openclaw && docker rm openclaw
 docker run -d --name openclaw -p 18789:18789 \
   -v openclaw-data:/root/.openclaw \
   --restart unless-stopped \
-  ghcr.io/1186258278/openclaw-zh:latest \
+  $IMAGE \
   openclaw gateway run
 ```
 

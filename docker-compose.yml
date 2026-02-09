@@ -15,6 +15,7 @@ version: '3.8'
 
 services:
   openclaw:
+    # 国内用户可替换为: 1186258278/openclaw-zh:nightly（Docker Hub 加速）
     image: ghcr.io/1186258278/openclaw-zh:nightly
     container_name: openclaw
     ports:
