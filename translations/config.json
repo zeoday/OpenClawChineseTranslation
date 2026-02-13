@@ -15,17 +15,18 @@
       "cli/commands.json",
       "cli/models-cli.json"
     ],
-    "wizard": [
+"wizard": [
       "wizard/onboarding.json",
       "wizard/onboarding-gateway-config.json",
       "wizard/security.json",
-      "wizard/finalize.json"
+      "wizard/finalize.json",
+      "wizard/onboarding-finalize.json"
     ],
     "tui": [
       "tui/waiting.json",
       "tui/commands.json"
     ],
-    "commands": [
+"commands": [
       "commands/auth-choice.json",
       "commands/auth-choice-options.json",
       "commands/auth-choice-xai.json",
@@ -42,6 +43,8 @@
       "commands/skills.json",
       "commands/onboard-skills.json",
       "commands/onboard-channels.json",
+      "commands/onboard-hooks.json",
+      "commands/health.json",
       "commands/plugin-install.json",
       "commands/channels.json",
       "commands/uninstall.json",
