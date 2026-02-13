@@ -253,7 +253,7 @@
   const SSY_MODELS_API = SSY_PROVIDER.modelsApi || 'https://router.shengsuanyun.com/api/v1/models';
   const SSY_MULTIMODAL_API = SSY_PROVIDER.multimodalApi || 'https://router.shengsuanyun.com/api/v1/models/multimodal';
   const SSY_WEBSITE = SSY_PROVIDER.website || 'https://www.shengsuanyun.com';
-  const SSY_API_KEY_URL = SSY_PROVIDER.apiKeyUrl || 'https://console.shengsuanyun.com/user/keys';
+  const SSY_API_KEY_URL = SSY_PROVIDER.apiKeyUrl || 'https://shengsuanyun.com/?from=CH_4BVI0BM2';
   const SSY_AFFILIATE_PARAM = SSY_PROVIDER.affiliateParam || 'from=CH_4BVI0BM2';
   const SSY_PROMO_TEXT = SSY_PROVIDER.promoText || '🎁 新用户送10元';
   const SSY_PROMO_NOTE = SSY_PROVIDER.promoNote || '';
